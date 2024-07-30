@@ -1,3 +1,6 @@
+*.pt
+*.pkl
+
 # JetBrains PyCharm IDE
 .idea/
 

@@ -44,6 +44,7 @@ def logger(model_id, header, contents):
 def read_log(model_id, header):
     root_path = sys.path[0]
     file_path = os.path.join(root_path, "loggers", "results", model_id, "log.yaml")
+    file_path = file_path.replace(":", "_")
 
     with open(file_path, "r") as yamlfile:
         log = yaml.safe_load(yamlfile)

@@ -1,8 +1,8 @@
 deeplob:
   batch_size: 128
-  learning_rate: 0.0001
-  epsilon: 1e-08
-  epoch: 30
+  learning_rate: 0.01
+  epsilon: 1
+  epoch: 100
   num_workers: 4
 
 deeplob-lighten:
