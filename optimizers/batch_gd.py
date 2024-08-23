@@ -4,8 +4,8 @@ from datetime import datetime
 from tqdm import tqdm
 import torch
 import pickle
-
 from loggers import logger
+from torch.utils import tensorboard
 
 
 def batch_gd(
@@ -21,6 +21,7 @@ def batch_gd(
     best_test_loss = np.inf
     best_test_epoch = 0
 
+    writer = tensorboard.SummaryWriter(log_dir="loggers/tensorboard_train")
     for iter in tqdm(range(epochs)):
         model.train()
         t0 = datetime.now()
@@ -75,6 +76,10 @@ def batch_gd(
             val_acc.append(tmp_acc)
         val_loss = np.mean(val_loss)
         val_acc = np.mean(val_acc)
+
+        if iter % 5 == 0:
+            writer.add_scalar("validation_loss/train", val_loss.item(), iter)
+            writer.add_scalar("validation_acc/train", val_acc.item(), iter)
 
         # Save losses
         training_info["train_loss_hist"].append(train_loss)
