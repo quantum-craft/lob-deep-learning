@@ -17,4 +17,5 @@ fi2010/
 krx/
 
 # Training & rimulation result
-loggers/Results/
+loggers/results/
+loggers/tensorboard*
