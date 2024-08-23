@@ -7,7 +7,8 @@ if __name__ == "__main__":
     dataset_type = "fi2010"
     normalization = "Zscore"
     lighten = False
-    model_type = "deeplob"
+    # model_type = "deeplob"
+    model_type = "translob"
 
     T = 100
     k = 4

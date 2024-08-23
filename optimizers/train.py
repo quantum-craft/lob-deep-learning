@@ -14,6 +14,8 @@ from models.lobster import Lobster
 from optimizers.batch_gd import batch_gd
 from loggers import logger
 
+from translob_pytorch import TransLOB  # type: ignore
+
 
 def __get_dataset__(
     model_id, dataset_type, normalization, lighten, T, k, stock, train_test_ratio
@@ -91,6 +93,9 @@ def train(
         model = Deeplob(lighten=lighten)
     elif model_type == "lobster":
         model = Lobster(lighten=lighten)
+    elif model_type == "translob":
+        model = TransLOB()
+
     model.to(model.device)
 
     if lighten:
@@ -98,7 +103,10 @@ def train(
     else:
         feature_size = 40
 
-    summary(model, (1, 1, 100, feature_size))
+    if model_type != "translob":
+        summary(model, (1, 1, 100, feature_size))
+    else:
+        summary(model, (1, 100, feature_size))
 
     # Hyperparameter setting
     hyperparams = __get_hyperparams__(model.name)

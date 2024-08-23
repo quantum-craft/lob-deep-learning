@@ -31,10 +31,16 @@ def batch_gd(
             inputs, targets = inputs.to(model.device, dtype=torch.float), targets.to(
                 model.device, dtype=torch.int64
             )
+
             # zero the parameter gradients
             optimizer.zero_grad()
+
             # Forward pass
+            if model.name == "translob":
+                inputs = torch.squeeze(inputs, 1)
+
             outputs = model(inputs)
+
             loss = criterion(outputs, targets)
             # Backward and optimize
             loss.backward()
@@ -55,7 +61,12 @@ def batch_gd(
             inputs, targets = inputs.to(model.device, dtype=torch.float), targets.to(
                 model.device, dtype=torch.int64
             )
+
+            if model.name == "translob":
+                inputs = torch.squeeze(inputs, 1)
+
             outputs = model(inputs)
+
             loss = criterion(outputs, targets)
             val_loss.append(loss.item())
             tmp_acc = torch.count_nonzero(

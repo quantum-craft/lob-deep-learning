@@ -1,0 +1,24 @@
+dataset_info:
+  T: 100
+  dataset_type: fi2010
+  k: 4
+  lighten: false
+  normalization: Zscore
+  stock:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  test_days:
+  - 8
+  - 9
+  - 10
+  train_days:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
