@@ -78,8 +78,10 @@ def batch_gd(
         val_acc = np.mean(val_acc)
 
         if iter % 5 == 0:
-            writer.add_scalar("validation_loss/train", val_loss.item(), iter)
-            writer.add_scalar("validation_acc/train", val_acc.item(), iter)
+            writer.add_scalar("train_loss", train_loss.item(), iter)
+            writer.add_scalar("val_loss", val_loss.item(), iter)
+            writer.add_scalar("train_acc", train_acc.item(), iter)
+            writer.add_scalar("val_acc", val_acc.item(), iter)
 
         # Save losses
         training_info["train_loss_hist"].append(train_loss)

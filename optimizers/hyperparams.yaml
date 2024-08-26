@@ -28,7 +28,7 @@ lobster-lighten:
 
 translob:
   batch_size: 128
-  learning_rate: 0.01
-  epsilon: 1
-  epoch: 300
+  learning_rate: 0.001
+  epsilon: 0.00000001
+  epoch: 200
   num_workers: 4
