@@ -1,0 +1,13 @@
+Grader command:
+python grader.py 2a-0-basic
+
+Tensorboard command:
+activate pytorch_22
+python c:\users\hallo.qq\anaconda3\envs\pytorch_22\lib\site-packages\tensorboard\main.py --logdir ./logs
+
+Training command:
+python ./src/submission/protonet.py --num_support 5 --device gpu
+python ./src/submission/maml.py --device gpu
+
+Test command:
+python ./src/submission/protonet.py --test, --device gpu, --num_support 1, --checkpoint_step 4900
