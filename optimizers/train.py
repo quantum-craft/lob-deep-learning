@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader, random_split
 from torchinfo import summary
 
 from loaders.fi2010_loader import Dataset_fi2010
+from loaders.binance_loader import Binance_USD_F_BTCUSDT
 from loaders.krx_preprocess import get_normalized_data_list
 from loaders.krx_loader import Dataset_krx
 from models.deeplob import Deeplob
@@ -20,7 +21,9 @@ from translob_pytorch import TransLOB  # type: ignore
 def __get_dataset__(
     model_id, dataset_type, normalization, lighten, T, k, stock, train_test_ratio
 ):
-    if dataset_type == "fi2010":
+    if dataset_type == "binance":
+        hours = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    elif dataset_type == "fi2010":
         auction = False
         days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     elif dataset_type == "krx":
@@ -28,11 +31,21 @@ def __get_dataset__(
         day_length = len(get_normalized_data_list(stock[0], normalization))
         days = list(range(day_length))
 
-    train_day_length = round(len(days) * train_test_ratio)
-    train_days = days[:train_day_length]
-    test_days = days[train_day_length:]
+    if dataset_type != "binance":
+        train_day_length = round(len(days) * train_test_ratio)
+        train_days = days[:train_day_length]
+        test_days = days[train_day_length:]
+    else:
+        train_hours_length = round(len(hours) * train_test_ratio)
+        train_hours = hours[:train_hours_length]
+        test_hours = hours[train_hours_length:]
+        train_days = train_hours  # fake
+        test_days = test_hours  # fake
 
-    if dataset_type == "fi2010":
+    if dataset_type == "binance":
+        dataset_train_val = Binance_USD_F_BTCUSDT(normalization, train_hours, T, k)
+        dataset_test = Binance_USD_F_BTCUSDT(normalization, test_hours, T, k)
+    elif dataset_type == "fi2010":
         dataset_train_val = Dataset_fi2010(
             auction, normalization, stock, train_days, T, k, lighten
         )
@@ -120,7 +133,7 @@ def train(
     train_loader = DataLoader(
         dataset=dataset_train,
         batch_size=batch_size,
-        shuffle=True,
+        shuffle=False,
         num_workers=num_workers,
     )
     val_loader = DataLoader(
