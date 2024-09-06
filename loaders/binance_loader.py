@@ -11,13 +11,20 @@ class Binance_USD_F_BTCUSDT:
 
         x = np.zeros((0, 0))
         y = np.zeros((0, 0))
+
+        zero_cnt = 0
+        one_cnt = 0
+        minus_one_cnt = 0
+
         for hour in self.hours:
             x_loaded = np.loadtxt(
-                f"C:/Users/Hallo.QQ/dev/binance-LOB/data/X/x_{self.normalization}_hour_{hour}.csv"
+                # f"C:/Users/Hallo.QQ/dev/python/binance-LOB/data/X/x_{self.normalization}_hour_{hour}.csv"
+                f"C:/Users/Hallo.QQ/dev/python/binance-LOB/data/X/x_hour_{hour}.csv"
             )[: -self.k, :]
 
             y_loaded = np.loadtxt(
-                f"C:/Users/Hallo.QQ/dev/binance-LOB/data/Y/y_{self.normalization}_k_{self.k}_hour_{hour}.csv"
+                # f"C:/Users/Hallo.QQ/dev/python/binance-LOB/data/Y/y_{self.normalization}_k_{self.k}_hour_{hour}.csv"
+                f"C:/Users/Hallo.QQ/dev/python/binance-LOB/data/Y/y_k_{self.k}_hour_{hour}.csv"
             )
 
             if x.shape[0] == 0:
@@ -46,14 +53,19 @@ class Binance_USD_F_BTCUSDT:
 
             if zero_percent > 0.85:
                 self.y[i] = 0 + 1
+                zero_cnt = zero_cnt + 1
             elif up > down:
                 self.y[i] = 1 + 1
+                one_cnt = one_cnt + 1
             else:
                 self.y[i] = -1 + 1
+                minus_one_cnt = minus_one_cnt + 1
 
         self.y = self.y.squeeze(1)
 
         self.length = len(self.y)
+
+        print(zero_cnt, one_cnt, minus_one_cnt)
 
     def __len__(self):
         """Denotes the total number of samples"""
