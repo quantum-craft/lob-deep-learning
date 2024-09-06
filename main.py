@@ -4,14 +4,17 @@ from simulator import evaluate, market_sim, training_vis, classification_report
 
 if __name__ == "__main__":
     # experiment parameter setting
-    dataset_type = "fi2010"
-    normalization = "Zscore"
+    # dataset_type = "fi2010"
+    dataset_type = "binance"
+    # normalization = "Zscore"
+    normalization = "zscore"
     lighten = False
-    model_type = "deeplob"
-    # model_type = "translob"
+    # model_type = "deeplob"
+    model_type = "translob"
 
     T = 100
-    k = 4
+    # k = 4
+    k = 5
     stock = [0, 1, 2, 3, 4]
     train_test_ratio = 0.7
 
