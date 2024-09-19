@@ -97,11 +97,7 @@ class Deeplob(nn.Module):
         )
         self.fc1 = nn.Linear(64, 3)
 
-        self.bn2d = torch.nn.BatchNorm2d(num_features=1)
-
     def forward(self, x):
-        x = self.bn2d(x)
-
         h0 = torch.zeros(1, x.size(0), 64).to(self.device)
         c0 = torch.zeros(1, x.size(0), 64).to(self.device)
 
