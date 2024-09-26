@@ -29,6 +29,7 @@ if __name__ == "__main__":
         train_test_ratio=train_test_ratio,
         model_type=model_type,
     )
+
     evaluate.test(model_id=model_id, model_type=model_type)
     classification_report.report(model_id=model_id)
     training_vis.vis_training_process(model_id=model_id)
